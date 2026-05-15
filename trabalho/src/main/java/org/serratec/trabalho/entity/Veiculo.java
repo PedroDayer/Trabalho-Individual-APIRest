@@ -1,7 +1,9 @@
 package org.serratec.trabalho.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -9,15 +11,46 @@ import java.util.UUID;
 @Entity
 public class Veiculo {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(nullable = false,updatable = false)
     private UUID id;
+
 //    private Cliente cliente;
+
+    @NotBlank
+    @Column(nullable = false)
     private String marca;
+
+    @NotBlank
+    @Column(nullable = false)
     private String modelo;
+
+    @NotNull
+    @Min(1900)
+    @Column(nullable = false, precision = 4) //precision = total de digitos
     private int ano;
+
+    @Min(1)
+    @NotNull
+    @Column(nullable = false)
     private BigDecimal valor;
+
+    @NotBlank
+    @Column(nullable = false, unique = true)
     private String placa;
+
+    @Min(0)
+    @NotNull
+    @Column(name = "maximo_desconto", nullable = false)
     private BigDecimal maximoDesconto;
+
+    @NotNull
+    @Column(nullable = false)
     private boolean vendido;
+
+
+    @Column(name = "valor_venda")
     private BigDecimal valorVenda;
 
     public Veiculo() {

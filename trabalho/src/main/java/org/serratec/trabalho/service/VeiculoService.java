@@ -48,11 +48,27 @@ public class VeiculoService {
         veiculoBd.setPlaca(veiculo.getPlaca());
         veiculoBd.setValor(veiculo.getValor());
         veiculoBd.setMaximoDesconto(veiculo.getMaximoDesconto());
+
+
         veiculoBd.setVendido(veiculo.isVendido());
         veiculoBd.setValorVenda(veiculo.getValorVenda());
 
         this.veiculoRepository.save(veiculoBd);
         return veiculoBd;
     }
+
+    public void deletarVeiculo(UUID id){
+
+        Optional<Veiculo> veiculoOptional = this.veiculoRepository.findById(id);
+
+        if(veiculoOptional.isEmpty()){
+//            throw new aqui;
+//            System.out.println("id nao existe");
+            return;
+        }
+
+        this.veiculoRepository.deleteById(id);
+    }
+
 
 }
