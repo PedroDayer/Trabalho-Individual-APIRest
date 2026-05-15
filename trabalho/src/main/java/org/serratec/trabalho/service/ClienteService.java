@@ -23,28 +23,28 @@ public class ClienteService {
         return this.clienteRepository.findAll();
     }
 
-    public Cliente buscarClienteCpf(String cpf){
-
-        Optional<Cliente> clienteOptional = this.clienteRepository.findByCpf(cpf);
-
-        if (clienteOptional.isEmpty()){
-            return null;
-            //throw new exception aqui!
-        }
-
-        return clienteOptional.get();
-    }
-
-    public List<Cliente> buscarClientesNome(String nome){
-
-        List<Cliente> clientes = this.clienteRepository.findAllByNome(nome);
-
-        if(clientes.isEmpty()){
-            //throw new exception aqui!
-        }
-
-        return clientes;
-    }
+//    public Cliente buscarClienteCpf(String cpf){
+//
+//        Optional<Cliente> clienteOptional = this.clienteRepository.findByCpf(cpf);
+//
+//        if (clienteOptional.isEmpty()){
+//            return null;
+//            //throw new exception aqui!
+//        }
+//
+//        return clienteOptional.get();
+//    }
+//
+//    public List<Cliente> buscarClientesNome(String nome){
+//
+//        List<Cliente> clientes = this.clienteRepository.findAllByNome(nome);
+//
+//        if(clientes.isEmpty()){
+//            //throw new exception aqui!
+//        }
+//
+//        return clientes;
+//    }
 
     public void removerClientes(UUID id){
 

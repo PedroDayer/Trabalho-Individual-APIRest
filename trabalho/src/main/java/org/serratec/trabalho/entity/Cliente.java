@@ -2,6 +2,11 @@ package org.serratec.trabalho.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
+
 
 import java.util.UUID;
 
@@ -11,18 +16,29 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(nullable = false, updatable = false) //nullable false no caso do id seria como um dupla segurança
     private UUID id;
 
+    @NotBlank
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false)
+    @NotBlank
+    @Pattern(regexp = "\\d{11}")
+    @Column(nullable = false, length = 11)
     private String telefone;
 
-    @Column(nullable = false, unique = true)
+    //quando lançar a exceçao reforce que o numero precisa ser o celular e 11 digitos necessariamente!
+
+    @NotBlank
+    @Column(nullable = false, unique = true, length = 11)
+    @Pattern(regexp = "\\d{11}")
+//    @Size(min = 11, max = 11)
     private String cpf;
 
-    @Column(nullable = false)
+    @NotBlank
+    @Email
+    @Column(nullable = false, unique = true)
     private String email;
 
     public Cliente() {

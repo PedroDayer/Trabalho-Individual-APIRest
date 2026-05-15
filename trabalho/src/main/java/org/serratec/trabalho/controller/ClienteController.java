@@ -31,17 +31,17 @@ public class ClienteController {
         return ResponseEntity.ok(clientes);
     }
 
-    @GetMapping("/{cpf}")
-    public ResponseEntity<Cliente> buscarCpf(@PathVariable String cpf){
-        Cliente cliente = clienteService.buscarClienteCpf(cpf);
-        return ResponseEntity.status(HttpStatus.OK).body(cliente);
-    }
-
-    @GetMapping("/buscar")
-    public ResponseEntity<List<Cliente>> buscarNome(@RequestParam String nome){
-        List<Cliente> clientes = clienteService.buscarClientesNome(nome);
-        return ResponseEntity.status(HttpStatus.OK).body(clientes);
-    }
+//    @GetMapping("/{cpf}")
+//    public ResponseEntity<Cliente> buscarCpf(@PathVariable String cpf){
+//        Cliente cliente = clienteService.buscarClienteCpf(cpf);
+//        return ResponseEntity.status(HttpStatus.OK).body(cliente);
+//    }
+//
+//    @GetMapping("/buscar")
+//    public ResponseEntity<List<Cliente>> buscarNome(@RequestParam String nome){
+//        List<Cliente> clientes = clienteService.buscarClientesNome(nome);
+//        return ResponseEntity.status(HttpStatus.OK).body(clientes);
+//    }
 
 
     @DeleteMapping("/{id}")
