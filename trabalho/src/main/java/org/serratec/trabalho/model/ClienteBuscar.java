@@ -1,0 +1,38 @@
+package org.serratec.trabalho.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.serratec.trabalho.entity.Cliente;
+
+import java.util.UUID;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ClienteBuscar {
+
+    private UUID id;
+    private String nome;
+    private String telefone;
+    private String cpf;
+    private String email;
+
+
+    private String formatCPF(String cpf) {
+        String cpfFormated = "";
+        cpfFormated += cpf.substring(0,3) + ".";
+        cpfFormated += cpf.substring(3,6) + ".";
+        cpfFormated += cpf.substring(6,9) + "-";
+        cpfFormated += cpf.substring(9);
+        return cpfFormated;
+    }
+
+    public ClienteBuscar(Cliente cliente){
+        this.id = cliente.getId();
+        this.nome = cliente.getNome();
+        this.cpf = cliente.getCpf();
+        this.email = cliente.getEmail();
+        this.telefone = cliente.getTelefone();
+    }
+}

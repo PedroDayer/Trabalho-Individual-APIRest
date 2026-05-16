@@ -1,6 +1,9 @@
 package org.serratec.trabalho.service;
 
+import org.serratec.trabalho.entity.Cliente;
 import org.serratec.trabalho.entity.Veiculo;
+import org.serratec.trabalho.exception.RegraNegocioException;
+import org.serratec.trabalho.exception.SolicitacaoNaoEncontradaException;
 import org.serratec.trabalho.repository.VeiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +18,15 @@ public class VeiculoService {
     @Autowired
     private VeiculoRepository veiculoRepository;
 
+    public Veiculo buscarPorId(UUID id){
+        return veiculoRepository.findById(id).orElseThrow(() -> new SolicitacaoNaoEncontradaException("Veículo com id: " + id + " não encontrado"));
+    }
+
+
     public void cadastrarVeiculo(Veiculo veiculo){
 
         if(veiculo.isVendido() && veiculo.getValorVenda() == null){
-//            throw new aqui falando que o valorVenda é obrigatorio
-            return;
+            throw new RegraNegocioException("O valor da venda precisa ser informado!");
         }
 
         this.veiculoRepository.save(veiculo);
@@ -58,16 +65,9 @@ public class VeiculoService {
     }
 
     public void deletarVeiculo(UUID id){
+        Veiculo veiculoExistente = buscarPorId(id);
 
-        Optional<Veiculo> veiculoOptional = this.veiculoRepository.findById(id);
-
-        if(veiculoOptional.isEmpty()){
-//            throw new aqui;
-//            System.out.println("id nao existe");
-            return;
-        }
-
-        this.veiculoRepository.deleteById(id);
+        this.veiculoRepository.delete(veiculoExistente);
     }
 
 

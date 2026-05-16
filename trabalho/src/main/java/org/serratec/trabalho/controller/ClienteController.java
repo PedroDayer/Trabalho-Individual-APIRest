@@ -1,11 +1,10 @@
 package org.serratec.trabalho.controller;
 
-import org.serratec.trabalho.entity.Cliente;
-import org.serratec.trabalho.repository.ClienteRepository;
+import jakarta.validation.Valid;
+import org.serratec.trabalho.model.ClienteCriar;
+import org.serratec.trabalho.model.ClienteBuscar;
 import org.serratec.trabalho.service.ClienteService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,40 +12,32 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/c1/cliente")
+@RequestMapping("/api/v1/cliente")
 public class ClienteController {
 
-    @Autowired
+
     ClienteService clienteService;
 
+    public ClienteController(ClienteService clienteService) {
+        this.clienteService = clienteService;
+    }
+
     @PostMapping
-    public ResponseEntity<Void> inserir(@RequestBody Cliente cliente){
+    public ResponseEntity<Void> inserir(@Valid @RequestBody ClienteCriar cliente){
         this.clienteService.inserirCliente(cliente);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping
-    public ResponseEntity<List<Cliente>> listar(){
-        List<Cliente> clientes = clienteService.listarClientes();
-        return ResponseEntity.ok(clientes);
+    @GetMapping("/{id}")
+    public ResponseEntity<List<ClienteBuscar>> buscarNomeCpf(@RequestParam(required = false) String nome, @RequestParam(required = false) String cpf){
+        List<ClienteBuscar> clientes = this.clienteService.listarOubuscarNomeCpf(nome,cpf);
+        return ResponseEntity.status(HttpStatus.OK).body(clientes);
     }
-
-//    @GetMapping("/{cpf}")
-//    public ResponseEntity<Cliente> buscarCpf(@PathVariable String cpf){
-//        Cliente cliente = clienteService.buscarClienteCpf(cpf);
-//        return ResponseEntity.status(HttpStatus.OK).body(cliente);
-//    }
-//
-//    @GetMapping("/buscar")
-//    public ResponseEntity<List<Cliente>> buscarNome(@RequestParam String nome){
-//        List<Cliente> clientes = clienteService.buscarClientesNome(nome);
-//        return ResponseEntity.status(HttpStatus.OK).body(clientes);
-//    }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> remover(@PathVariable UUID id){
-        clienteService.removerClientes(id);
+    public ResponseEntity<Void> remover(@Valid @PathVariable UUID id){
+        clienteService.removerCliente(id);
         return ResponseEntity.ok().build();
     }
 

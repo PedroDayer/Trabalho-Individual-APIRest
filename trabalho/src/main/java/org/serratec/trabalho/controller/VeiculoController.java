@@ -1,5 +1,6 @@
 package org.serratec.trabalho.controller;
 
+import jakarta.validation.Valid;
 import org.serratec.trabalho.entity.Veiculo;
 import org.serratec.trabalho.service.VeiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class VeiculoController {
 
 
     @PostMapping
-    public ResponseEntity<Void> inserir(@RequestBody Veiculo veiculo){
+    public ResponseEntity<Void> inserir(@Valid @RequestBody Veiculo veiculo){
         this.veiculoService.cadastrarVeiculo(veiculo);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -39,7 +40,7 @@ public class VeiculoController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable UUID id){
+    public ResponseEntity<Void> deletar(@Valid @PathVariable UUID id){
         this.veiculoService.deletarVeiculo(id);
         return ResponseEntity.ok().build();
     }
