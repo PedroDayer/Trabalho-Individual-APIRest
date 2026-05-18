@@ -28,10 +28,10 @@ public class ClienteService {
     public Cliente inserirCliente (ClienteCriar cliente){
 
         if (clienteRepository.existsByCpf(cliente.getCpf())){
-            throw new DadosDuplicadosException("Já existe um cliente com esse cpf: " + cliente.getCpf() + " .Informe outro!");
+            throw new DadosDuplicadosException("Já existe um cliente com esse cpf: " + cliente.getCpf() + ". Informe outro!");
         }
         if (clienteRepository.existsByEmail(cliente.getEmail())){
-            throw new DadosDuplicadosException("Já existe um cliente com esse email: " + cliente.getEmail() + " .Informe outro!");
+            throw new DadosDuplicadosException("Já existe um cliente com esse email: " + cliente.getEmail() + ". Informe outro!");
         }
 
         Cliente clienteCriar = new Cliente(cliente);
@@ -40,16 +40,21 @@ public class ClienteService {
     }
 
 
-    public List<ClienteBuscar> listarOubuscarNomeCpf (String cpf, String nome){
+    public List<ClienteBuscar> listarOubuscarNomeCpf (String nome, String cpf){
 
         List<Cliente> clientes = new ArrayList<>();
+
+        if((nome == null || nome.isBlank()) && (cpf == null || cpf.isBlank())){
+
+            clientes = clienteRepository.findAll();
+        }
 
         if(cpf != null && !cpf.isBlank()){
             clientes = this.clienteRepository.findByCpf(cpf);
         }
 
         if(nome != null && !nome.isBlank()){
-            clientes = this.clienteRepository.findByNome(nome);
+            clientes = this.clienteRepository.findByNomeIgnoreCase(nome);
         }
 
         if(clientes.isEmpty()){

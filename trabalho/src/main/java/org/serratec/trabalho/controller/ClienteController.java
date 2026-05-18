@@ -28,7 +28,7 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping
     public ResponseEntity<List<ClienteBuscar>> buscarNomeCpf(@RequestParam(required = false) String nome, @RequestParam(required = false) String cpf){
         List<ClienteBuscar> clientes = this.clienteService.listarOubuscarNomeCpf(nome,cpf);
         return ResponseEntity.status(HttpStatus.OK).body(clientes);

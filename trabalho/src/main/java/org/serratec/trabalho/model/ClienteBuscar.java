@@ -31,7 +31,7 @@ public class ClienteBuscar {
     public ClienteBuscar(Cliente cliente){
         this.id = cliente.getId();
         this.nome = cliente.getNome();
-        this.cpf = cliente.getCpf();
+        this.cpf = formatCPF(cliente.getCpf());
         this.email = cliente.getEmail();
         this.telefone = cliente.getTelefone();
     }

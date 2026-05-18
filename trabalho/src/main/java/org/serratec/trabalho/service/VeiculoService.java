@@ -4,10 +4,14 @@ import org.serratec.trabalho.entity.Cliente;
 import org.serratec.trabalho.entity.Veiculo;
 import org.serratec.trabalho.exception.RegraNegocioException;
 import org.serratec.trabalho.exception.SolicitacaoNaoEncontradaException;
+import org.serratec.trabalho.model.VeiculoAtualizar;
+import org.serratec.trabalho.model.VeiculoBuscar;
+import org.serratec.trabalho.model.VeiculoCadastrar;
 import org.serratec.trabalho.repository.VeiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,46 +27,104 @@ public class VeiculoService {
     }
 
 
-    public void cadastrarVeiculo(Veiculo veiculo){
+    public void cadastrarVeiculo(VeiculoCadastrar veiculo){
+        Veiculo veiculoInserir = new Veiculo(veiculo);
+        this.veiculoRepository.save(veiculoInserir);
+    }
+
+    public void atualizarVeiculo(UUID id, VeiculoAtualizar veiculo){
+
+        Veiculo veiculoExistente = buscarPorId(id);
 
         if(veiculo.isVendido() && veiculo.getValorVenda() == null){
-            throw new RegraNegocioException("O valor da venda precisa ser informado!");
-        }
-
-        this.veiculoRepository.save(veiculo);
+         throw new RegraNegocioException("O valor da venda precisa ser informado!");
+      }
+        veiculoExistente.atualizarDados(veiculo);
+        this.veiculoRepository.save(veiculoExistente);
     }
+
+
 
     //ha a necessidade do pacote service retornar algo?
-    public List<Veiculo> listarVeiculos(){
-        return this.veiculoRepository.findAll();
-    }
+    public List<VeiculoBuscar> listarOuBuscarPlacaMarcaModelo(String placa, String marca, String modelo){
 
-//    public
+        List<Veiculo> veiculos = new ArrayList<>();
 
-    public Veiculo atualizarVeiculo(UUID id, Veiculo veiculo){
-
-        Optional<Veiculo> veiculoOptional = this.veiculoRepository.findById(id);
-
-        if(veiculoOptional.isEmpty()){
-//            throw new aqui;
-            return null;
+        if ((placa == null || placa.isBlank()) && (marca == null || marca.isBlank()) && (modelo == null || modelo.isBlank())){
+            veiculos = this.veiculoRepository.findAll();
         }
 
-        Veiculo veiculoBd = veiculoOptional.get();
-        veiculoBd.setAno(veiculo.getAno());
-        veiculoBd.setMarca(veiculo.getMarca());
-        veiculoBd.setModelo(veiculo.getModelo());
-        veiculoBd.setPlaca(veiculo.getPlaca());
-        veiculoBd.setValor(veiculo.getValor());
-        veiculoBd.setMaximoDesconto(veiculo.getMaximoDesconto());
+        if(placa != null && !placa.isBlank()){
 
+            if (!this.veiculoRepository.existsByPlaca(placa)){
+                throw new SolicitacaoNaoEncontradaException("Placa não encontrada!");
+            }
+            veiculos = this.veiculoRepository.findByPlacaIgnoreCase(placa);
+        }
 
-        veiculoBd.setVendido(veiculo.isVendido());
-        veiculoBd.setValorVenda(veiculo.getValorVenda());
+        if(marca != null && !marca.isBlank()){
 
-        this.veiculoRepository.save(veiculoBd);
-        return veiculoBd;
+            if (!this.veiculoRepository.existsByMarca(marca)){
+                throw new SolicitacaoNaoEncontradaException("Marca não encontrada!");
+            }
+            veiculos = this.veiculoRepository.findByMarcaIgnoreCase(marca);
+        }
+
+        if(modelo != null && !modelo.isBlank()){
+
+            if (!this.veiculoRepository.existsByModelo(modelo)){
+                throw new SolicitacaoNaoEncontradaException("Modelo não encontrado!");
+            }
+            veiculos = this.veiculoRepository.findByModeloIgnoreCase(modelo);
+        }
+
+        if(veiculos.isEmpty()){
+            throw new SolicitacaoNaoEncontradaException("Veiculos não encontrados pelos parametros.");
+        }
+
+        return veiculos.stream().map(veiculo -> new VeiculoBuscar(veiculo)).toList();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    public Veiculo atualizarVeiculo(UUID id, Veiculo veiculo){
+//
+//        Optional<Veiculo> veiculoOptional = this.veiculoRepository.findById(id);
+//
+//        if(veiculoOptional.isEmpty()){
+//            throw new aqui;
+//            return null;
+//        }
+//
+//        Veiculo veiculoBd = veiculoOptional.get();
+//        veiculoBd.setAno(veiculo.getAno());
+//        veiculoBd.setMarca(veiculo.getMarca());
+//        veiculoBd.setModelo(veiculo.getModelo());
+//        veiculoBd.setPlaca(veiculo.getPlaca());
+//        veiculoBd.setValor(veiculo.getValor());
+//        veiculoBd.setMaximoDesconto(veiculo.getMaximoDesconto());
+//
+//
+//        veiculoBd.setVendido(veiculo.isVendido());
+//        veiculoBd.setValorVenda(veiculo.getValorVenda());
+//
+//        this.veiculoRepository.save(veiculoBd);
+//        return veiculoBd;
+//    }
 
     public void deletarVeiculo(UUID id){
         Veiculo veiculoExistente = buscarPorId(id);

@@ -49,5 +49,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new MensagemErro(ex.getMessage(), LocalDateTime.now()));
     }
 
-
 }
