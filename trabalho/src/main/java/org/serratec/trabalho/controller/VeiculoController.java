@@ -2,11 +2,8 @@ package org.serratec.trabalho.controller;
 
 import jakarta.validation.Valid;
 import org.serratec.trabalho.entity.Veiculo;
-import org.serratec.trabalho.model.VeiculoAtualizar;
-import org.serratec.trabalho.model.VeiculoBuscar;
-import org.serratec.trabalho.model.VeiculoCadastrar;
+import org.serratec.trabalho.model.*;
 import org.serratec.trabalho.service.VeiculoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -26,15 +23,19 @@ public class VeiculoController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> inserir(@Valid @RequestBody VeiculoCadastrar veiculo){
+    public ResponseEntity<MensagemSucesso> inserir(@Valid @RequestBody VeiculoCadastrar veiculo){
         this.veiculoService.cadastrarVeiculo(veiculo);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+
+        MensagemSucesso mensagemSucesso = new MensagemSucesso("Veiculo cadastrado com sucesso.");
+        return ResponseEntity.status(HttpStatus.CREATED).body(mensagemSucesso);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizar(@PathVariable UUID id, @Valid @RequestBody VeiculoAtualizar veiculo){
+    public ResponseEntity<MensagemSucesso> atualizar(@PathVariable UUID id, @Valid @RequestBody VeiculoAtualizar veiculo){
         this.veiculoService.atualizarVeiculo(id, veiculo);
-        return ResponseEntity.ok().build();
+
+        MensagemSucesso mensagemSucesso = new MensagemSucesso("Veiculo atualizado com sucesso.");
+        return ResponseEntity.ok(mensagemSucesso);
     }
 
     @GetMapping

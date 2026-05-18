@@ -3,6 +3,7 @@ package org.serratec.trabalho.controller;
 import jakarta.validation.Valid;
 import org.serratec.trabalho.model.ClienteCriar;
 import org.serratec.trabalho.model.ClienteBuscar;
+import org.serratec.trabalho.model.MensagemSucesso;
 import org.serratec.trabalho.service.ClienteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +24,12 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> inserir(@Valid @RequestBody ClienteCriar cliente){
+    public ResponseEntity<MensagemSucesso> inserir(@Valid @RequestBody ClienteCriar cliente){
         this.clienteService.inserirCliente(cliente);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+
+        MensagemSucesso mensagemSucesso = new MensagemSucesso("Cliente criado com sucesso.");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(mensagemSucesso);
     }
 
     @GetMapping
