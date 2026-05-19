@@ -19,8 +19,14 @@ import java.util.UUID;
 @Service
 public class VeiculoService {
 
-    @Autowired
+
     private VeiculoRepository veiculoRepository;
+    private ClienteService clienteService;
+
+    public VeiculoService(VeiculoRepository veiculoRepository, ClienteService clienteService) {
+        this.veiculoRepository = veiculoRepository;
+        this.clienteService = clienteService;
+    }
 
     public Veiculo buscarPorId(UUID id){
         return veiculoRepository.findById(id).orElseThrow(() -> new SolicitacaoNaoEncontradaException("Veículo com id: " + id + " não encontrado"));
@@ -28,8 +34,10 @@ public class VeiculoService {
 
 
     public void cadastrarVeiculo(VeiculoCadastrar veiculo){
-        Veiculo veiculoInserir = new Veiculo(veiculo);
-        this.veiculoRepository.save(veiculoInserir);
+
+        Cliente cliente = this.clienteService.buscarPorId(veiculo.getClienteId());
+        Veiculo veiculoDB = new Veiculo(veiculo, cliente);
+        this.veiculoRepository.save(veiculoDB);
     }
 
     public void atualizarVeiculo(UUID id, VeiculoAtualizar veiculo){

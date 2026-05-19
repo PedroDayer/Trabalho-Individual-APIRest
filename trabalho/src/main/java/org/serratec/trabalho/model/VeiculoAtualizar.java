@@ -22,18 +22,18 @@ public class VeiculoAtualizar {
 
     @NotNull
     @Min(1900)
-    private int ano;
+    private Integer ano;
 
     @NotNull
     @Min(1)
-    private float valor;
+    private Float valor;
 
     @NotBlank
     private String placa;
 
     @NotNull
     @Min(0)
-    private float maximoDesconto;
+    private Float maximoDesconto;
 
     @NotNull
     private boolean vendido;

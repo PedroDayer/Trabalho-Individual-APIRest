@@ -18,6 +18,13 @@ public class ClienteBuscar {
     private String cpf;
     private String email;
 
+    private String formatTelefone(String telefone){
+        String telefoneFormated = "";
+        telefoneFormated += "(" + telefone.substring(0,2) + ") ";
+        telefoneFormated += telefone.substring(2,7) + "-";
+        telefoneFormated += telefone.substring(7);
+        return telefoneFormated;
+    }
 
     private String formatCPF(String cpf) {
         String cpfFormated = "";
@@ -33,6 +40,6 @@ public class ClienteBuscar {
         this.nome = cliente.getNome();
         this.cpf = formatCPF(cliente.getCpf());
         this.email = cliente.getEmail();
-        this.telefone = cliente.getTelefone();
+        this.telefone = formatTelefone(cliente.getTelefone());
     }
 }
