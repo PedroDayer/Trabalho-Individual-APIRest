@@ -4,6 +4,7 @@ package org.serratec.trabalho.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.serratec.trabalho.entity.Cliente;
 import org.serratec.trabalho.entity.Veiculo;
 
 import java.util.UUID;
@@ -22,6 +23,7 @@ public class VeiculoBuscar {
     private Float maximoDesconto;
     private Boolean vendido;
     private Float valorVenda;
+    private String clienteId;
 
     public VeiculoBuscar(Veiculo veiculo){
         this.id = veiculo.getId();
@@ -33,6 +35,7 @@ public class VeiculoBuscar {
         this.maximoDesconto = veiculo.getMaximoDesconto();
         this.vendido = veiculo.getVendido();
         this.valorVenda = veiculo.getValorVenda();
+        this.clienteId = veiculo.getCliente().getId().toString();
     }
 
 

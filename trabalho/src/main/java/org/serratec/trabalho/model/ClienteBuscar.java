@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.serratec.trabalho.entity.Cliente;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -17,6 +19,7 @@ public class ClienteBuscar {
     private String telefone;
     private String cpf;
     private String email;
+    private List<VeiculoBuscar> veiculos;
 
     private String formatTelefone(String telefone){
         String telefoneFormated = "";
@@ -41,5 +44,12 @@ public class ClienteBuscar {
         this.cpf = formatCPF(cliente.getCpf());
         this.email = cliente.getEmail();
         this.telefone = formatTelefone(cliente.getTelefone());
+
+//        if (cliente.getVeiculos() != null) {
+//            this.veiculos = cliente.getVeiculos().stream()
+//                    .map(VeiculoBuscar::new)
+//                    .collect(Collectors.toList());
+//        }
+
     }
 }

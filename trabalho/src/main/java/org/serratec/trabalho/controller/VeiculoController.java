@@ -46,7 +46,7 @@ public class VeiculoController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@Valid @PathVariable UUID id){
+    public ResponseEntity<Void> deletar(@PathVariable UUID id){
         this.veiculoService.deletarVeiculo(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

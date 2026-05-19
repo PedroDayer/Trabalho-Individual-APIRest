@@ -1,6 +1,7 @@
 package org.serratec.trabalho.controller;
 
 import jakarta.validation.Valid;
+import org.serratec.trabalho.entity.Cliente;
 import org.serratec.trabalho.model.ClienteCriar;
 import org.serratec.trabalho.model.ClienteBuscar;
 import org.serratec.trabalho.model.MensagemSucesso;
@@ -40,9 +41,16 @@ public class ClienteController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> remover(@Valid @PathVariable UUID id){
+    public ResponseEntity<Void> remover(@PathVariable UUID id){
         clienteService.removerCliente(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ClienteBuscar> buscarPorId(@PathVariable UUID id) {
+        Cliente cliente = clienteService.buscarPorId(id);
+        return ResponseEntity.ok(new ClienteBuscar(cliente));
+    }
+
 
 }
