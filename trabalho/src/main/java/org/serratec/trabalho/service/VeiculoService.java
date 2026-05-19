@@ -49,16 +49,13 @@ public class VeiculoService {
 
         Veiculo veiculoExistente = buscarPorId(id);
 
-        if(veiculo.isVendido() && veiculo.getValorVenda() == null){
+        if(veiculo.getVendido() != null && veiculo.getVendido() && veiculo.getValorVenda() == null){
          throw new RegraNegocioException("O valor da venda precisa ser informado!");
       }
         veiculoExistente.atualizarDados(veiculo);
         this.veiculoRepository.save(veiculoExistente);
     }
 
-
-
-    //ha a necessidade do pacote service retornar algo?
     public List<VeiculoBuscar> listarOuBuscarPlacaMarcaModelo(String placa, String marca, String modelo){
 
         List<Veiculo> veiculos = new ArrayList<>();

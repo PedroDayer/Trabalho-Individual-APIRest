@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Check;
 import org.serratec.trabalho.model.VeiculoAtualizar;
 import org.serratec.trabalho.model.VeiculoCadastrar;
 
@@ -18,6 +19,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Check(constraints = "ano >= 1900")
+@Check(constraints = "maximo_desconto >= 0")
+@Check(constraints = "valor >= 1")
+@Check(constraints = "valor_venda >= 0")
 public class Veiculo {
 
     @Id
@@ -34,7 +39,7 @@ public class Veiculo {
     @Column(nullable = false)
     private String modelo;
 
-    @Column(nullable = false, precision = 4) //precision = total de digitos
+    @Column(nullable = false)
     private Integer ano;
 
     @Column(nullable = false)
@@ -47,19 +52,11 @@ public class Veiculo {
     private Float maximoDesconto;
 
     @Column(nullable = false)
-    private boolean vendido;
+    private Boolean vendido;
 
     @Column(name = "valor_venda")
     private Float valorVenda = null;
 
-//    public Veiculo(VeiculoCadastrar veiculoCadastrar){
-//        this.marca = veiculoCadastrar.getMarca();
-//        this.modelo = veiculoCadastrar.getModelo();
-//        this.ano = veiculoCadastrar.getAno();
-//        this.valor = veiculoCadastrar.getValor();
-//        this.placa = veiculoCadastrar.getPlaca();
-//        this.maximoDesconto = veiculoCadastrar.getMaximoDesconto();
-//    }
 
     public void atualizarDados(VeiculoAtualizar veiculoAtualizar) {
         if (veiculoAtualizar.getMarca() != null){
@@ -80,11 +77,25 @@ public class Veiculo {
         if (veiculoAtualizar.getMaximoDesconto() != null){
             this.maximoDesconto = veiculoAtualizar.getMaximoDesconto();
         }
-        //o restante precisa?
-        this.vendido = veiculoAtualizar.isVendido();
 
-        //ou seja, se atualizar para nao vendido, o valor venda vai ser null
-        this.valorVenda = veiculoAtualizar.isVendido() ? veiculoAtualizar.getValorVenda() : null;
+        if (veiculoAtualizar.getVendido() != null) {
+            this.vendido = veiculoAtualizar.getVendido();
+
+            // Se vendido = true
+            if (this.vendido) {
+                if (veiculoAtualizar.getValorVenda() != null) {
+                    this.valorVenda = veiculoAtualizar.getValorVenda();
+                }
+            } else {
+                // Se mudou para false, limpa o valor da venda
+                this.valorVenda = null;
+            }
+        }
+        //metodo para corrigir o valorVenda apenas
+        else if (veiculoAtualizar.getValorVenda() != null) {
+            this.valorVenda = veiculoAtualizar.getValorVenda();
+        }
+
     }
 
     public Veiculo(VeiculoCadastrar  veiculoCadastrar, Cliente cliente) {
@@ -95,6 +106,11 @@ public class Veiculo {
         this.placa =  veiculoCadastrar.getPlaca();
         this.maximoDesconto =  veiculoCadastrar.getMaximoDesconto();
         this.cliente = cliente;
+
+        //começa como falso, pq...
+//        @Column(nullable = false)
+//        private Boolean vendido;
+        this.vendido = false;
     }
 
 }

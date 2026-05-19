@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -14,29 +15,22 @@ import lombok.NoArgsConstructor;
 public class VeiculoAtualizar {
 
 
-    @NotBlank
     private String marca;
 
-    @NotBlank
     private String modelo;
 
-    @NotNull
     @Min(1900)
     private Integer ano;
 
-    @NotNull
     @Min(1)
     private Float valor;
 
-    @NotBlank
     private String placa;
 
-    @NotNull
     @Min(0)
     private Float maximoDesconto;
 
-    @NotNull
-    private boolean vendido;
+    private Boolean vendido;
 
     private Float valorVenda;
 

@@ -20,7 +20,7 @@ public class VeiculoBuscar {
     private Float valor;
     private String placa;
     private Float maximoDesconto;
-    private boolean vendido;
+    private Boolean vendido;
     private Float valorVenda;
 
     public VeiculoBuscar(Veiculo veiculo){
@@ -31,7 +31,7 @@ public class VeiculoBuscar {
         this.valor = veiculo.getValor();
         this.placa = veiculo.getPlaca();
         this.maximoDesconto = veiculo.getMaximoDesconto();
-        this.vendido = veiculo.isVendido();
+        this.vendido = veiculo.getVendido();
         this.valorVenda = veiculo.getValorVenda();
     }
 
