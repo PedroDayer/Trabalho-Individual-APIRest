@@ -16,10 +16,10 @@ public class VeiculoBuscar {
     private UUID id;
     private String marca;
     private String modelo;
-    private int ano;
-    private float valor;
+    private Integer ano;
+    private Float valor;
     private String placa;
-    private float maximoDesconto;
+    private Float maximoDesconto;
     private boolean vendido;
     private Float valorVenda;
 
