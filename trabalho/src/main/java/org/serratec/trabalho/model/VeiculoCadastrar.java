@@ -18,25 +18,25 @@ public class VeiculoCadastrar {
     @NotNull
     private UUID clienteId;
 
-    @NotBlank
+    @NotBlank(message = ", nao pode ser nulo ou vazio")
     private String marca;
 
-    @NotBlank
+    @NotBlank(message = ", nao pode ser nulo ou vazio")
     private String modelo;
 
-    @NotNull
+    @NotNull(message = ", não pode ser nulo!")
     @Min(1900)
-    private int ano;
+    private Integer ano;
 
-    @NotNull
+    @NotNull(message = "nao pode ser nulo!")
     @Min(1)
-    private float valor;
+    private Float valor;
 
-    @NotBlank
+    @NotBlank(message = ", nao pode ser nulo ou vazio")
     private String placa;
 
-    @NotNull
+    @NotNull(message = ", não pode ser nulo!")
     @Min(0)
-    private float maximoDesconto;
+    private Float maximoDesconto;
 
 }

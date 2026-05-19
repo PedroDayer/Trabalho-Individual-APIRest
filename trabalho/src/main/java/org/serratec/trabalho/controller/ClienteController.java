@@ -42,7 +42,7 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@Valid @PathVariable UUID id){
         clienteService.removerCliente(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }

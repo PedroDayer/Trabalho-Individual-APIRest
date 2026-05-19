@@ -2,6 +2,7 @@ package org.serratec.trabalho.service;
 
 import org.serratec.trabalho.entity.Cliente;
 import org.serratec.trabalho.entity.Veiculo;
+import org.serratec.trabalho.exception.DadosDuplicadosException;
 import org.serratec.trabalho.exception.RegraNegocioException;
 import org.serratec.trabalho.exception.SolicitacaoNaoEncontradaException;
 import org.serratec.trabalho.model.VeiculoAtualizar;
@@ -34,6 +35,10 @@ public class VeiculoService {
 
 
     public void cadastrarVeiculo(VeiculoCadastrar veiculo){
+
+        if(veiculoRepository.existsByPlaca(veiculo.getPlaca())){
+            throw new DadosDuplicadosException("Já existe um veículo com essa placa: " + veiculo.getPlaca() + ". Informe outra!");
+        }
 
         Cliente cliente = this.clienteService.buscarPorId(veiculo.getClienteId());
         Veiculo veiculoDB = new Veiculo(veiculo, cliente);
@@ -87,52 +92,12 @@ public class VeiculoService {
         }
 
         if(veiculos.isEmpty()){
-            throw new SolicitacaoNaoEncontradaException("Veiculos não encontrados pelos parametros.");
+            throw new SolicitacaoNaoEncontradaException("Veiculos não encontrados.");
         }
 
         return veiculos.stream().map(veiculo -> new VeiculoBuscar(veiculo)).toList();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    public Veiculo atualizarVeiculo(UUID id, Veiculo veiculo){
-//
-//        Optional<Veiculo> veiculoOptional = this.veiculoRepository.findById(id);
-//
-//        if(veiculoOptional.isEmpty()){
-//            throw new aqui;
-//            return null;
-//        }
-//
-//        Veiculo veiculoBd = veiculoOptional.get();
-//        veiculoBd.setAno(veiculo.getAno());
-//        veiculoBd.setMarca(veiculo.getMarca());
-//        veiculoBd.setModelo(veiculo.getModelo());
-//        veiculoBd.setPlaca(veiculo.getPlaca());
-//        veiculoBd.setValor(veiculo.getValor());
-//        veiculoBd.setMaximoDesconto(veiculo.getMaximoDesconto());
-//
-//
-//        veiculoBd.setVendido(veiculo.isVendido());
-//        veiculoBd.setValorVenda(veiculo.getValorVenda());
-//
-//        this.veiculoRepository.save(veiculoBd);
-//        return veiculoBd;
-//    }
 
     public void deletarVeiculo(UUID id){
         Veiculo veiculoExistente = buscarPorId(id);

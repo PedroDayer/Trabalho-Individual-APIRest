@@ -22,7 +22,6 @@ public class Veiculo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(nullable = false, updatable = false) //retirar!
     private UUID id;
 
     @ManyToOne()

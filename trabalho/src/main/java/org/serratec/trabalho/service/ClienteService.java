@@ -50,15 +50,22 @@ public class ClienteService {
         }
 
         if(cpf != null && !cpf.isBlank()){
+
+            if (!this.clienteRepository.existsByCpf(cpf)){
+                throw new SolicitacaoNaoEncontradaException("Cpf não encontrado!");
+            }
             clientes = this.clienteRepository.findByCpf(cpf);
         }
 
         if(nome != null && !nome.isBlank()){
             clientes = this.clienteRepository.findByNomeIgnoreCase(nome);
+            if (!this.clienteRepository.existsByNome(nome)){
+                throw new SolicitacaoNaoEncontradaException("Nome não encontrado!");
+            }
         }
 
         if(clientes.isEmpty()){
-            throw new SolicitacaoNaoEncontradaException("Clientes não encontrados pelos parametros.");
+            throw new SolicitacaoNaoEncontradaException("Clientes não encontrados.");
         }
 
         return clientes.stream().map(cliente -> new ClienteBuscar(cliente)).toList();

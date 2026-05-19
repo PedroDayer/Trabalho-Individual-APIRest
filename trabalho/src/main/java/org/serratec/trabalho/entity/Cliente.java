@@ -19,9 +19,7 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(nullable = false, updatable = false) //nullable false no caso do id seria como um dupla segurança
     private UUID id;
-
 
     @Column(nullable = false)
     private String nome;
