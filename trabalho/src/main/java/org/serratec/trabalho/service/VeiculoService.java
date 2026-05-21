@@ -4,18 +4,15 @@ import org.serratec.trabalho.entity.Cliente;
 import org.serratec.trabalho.entity.Veiculo;
 import org.serratec.trabalho.exception.CampoInvalidoException;
 import org.serratec.trabalho.exception.DadosDuplicadosException;
-import org.serratec.trabalho.exception.RegraNegocioException;
 import org.serratec.trabalho.exception.SolicitacaoNaoEncontradaException;
 import org.serratec.trabalho.model.VeiculoAtualizar;
 import org.serratec.trabalho.model.VeiculoBuscar;
 import org.serratec.trabalho.model.VeiculoCadastrar;
 import org.serratec.trabalho.repository.VeiculoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -79,23 +76,20 @@ public class VeiculoService {
             if (!this.veiculoRepository.existsByPlaca(placa)){
                 throw new SolicitacaoNaoEncontradaException("Placa não encontrada!");
             }
-            veiculos = this.veiculoRepository.findByPlacaIgnoreCase(placa);
+
+            veiculos = this.veiculoRepository.findByPlaca(placa);
         }
 
         if(marca != null && !marca.isBlank()){
 
-            if (!this.veiculoRepository.existsByMarca(marca)){
-                throw new SolicitacaoNaoEncontradaException("Marca não encontrada!");
-            }
-            veiculos = this.veiculoRepository.findByMarcaIgnoreCase(marca);
+            String formatoLike = marca + "%";
+            veiculos = this.veiculoRepository.findByMarcaLikeIgnoreCase(formatoLike);
         }
 
         if(modelo != null && !modelo.isBlank()){
 
-            if (!this.veiculoRepository.existsByModelo(modelo)){
-                throw new SolicitacaoNaoEncontradaException("Modelo não encontrado!");
-            }
-            veiculos = this.veiculoRepository.findByModeloIgnoreCase(modelo);
+            String formatoLike = modelo + "%";
+            veiculos = this.veiculoRepository.findByModeloLikeIgnoreCase(formatoLike);
         }
 
         if(veiculos.isEmpty()){

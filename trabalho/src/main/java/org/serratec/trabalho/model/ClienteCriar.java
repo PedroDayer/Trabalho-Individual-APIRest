@@ -25,7 +25,7 @@ public class ClienteCriar {
     private String cpf;
 
     @NotBlank
-    @Email(message = "mal formato. Utilize o padão 'teste@gmail.com' ")
+    @Email(message = "mal formatado. Utilize o padrão 'teste@exemplo.com' ")
     private String email;
 
 }

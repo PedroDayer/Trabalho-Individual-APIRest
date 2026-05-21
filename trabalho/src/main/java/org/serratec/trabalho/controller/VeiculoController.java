@@ -1,11 +1,9 @@
 package org.serratec.trabalho.controller;
 
 import jakarta.validation.Valid;
-import org.serratec.trabalho.entity.Veiculo;
 import org.serratec.trabalho.model.*;
 import org.serratec.trabalho.service.VeiculoService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

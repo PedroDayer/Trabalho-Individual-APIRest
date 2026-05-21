@@ -4,7 +4,6 @@ package org.serratec.trabalho.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.serratec.trabalho.entity.Cliente;
 import org.serratec.trabalho.entity.Veiculo;
 
 import java.util.UUID;

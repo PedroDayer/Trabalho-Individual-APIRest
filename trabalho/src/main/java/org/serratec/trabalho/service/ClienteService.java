@@ -7,9 +7,7 @@ import org.serratec.trabalho.exception.SolicitacaoNaoEncontradaException;
 import org.serratec.trabalho.model.ClienteCriar;
 import org.serratec.trabalho.model.ClienteBuscar;
 import org.serratec.trabalho.repository.ClienteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +82,10 @@ public class ClienteService {
     public void removerCliente(UUID id){
 
         Cliente clienteExistente = buscarPorId(id);
+
+        if(id == null){
+            throw new CampoInvalidoException("Informe um id.");
+        }
         clienteRepository.delete(clienteExistente);
     }
 

@@ -2,15 +2,11 @@ package org.serratec.trabalho.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.Check;
 import org.serratec.trabalho.model.VeiculoAtualizar;
 import org.serratec.trabalho.model.VeiculoCadastrar;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 
