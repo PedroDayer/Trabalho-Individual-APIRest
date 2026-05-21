@@ -4,6 +4,7 @@ package org.serratec.trabalho.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.*;
 import org.serratec.trabalho.model.ClienteCriar;
 
@@ -22,13 +23,9 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    //mappedBy = "cliente": Avisa ao Hibernate que o dono real desse relacionamento é o campo private Cliente cliente; que está lá na classe Veiculo.
-    //cascade = CascadeType.ALL: Diz que qualquer operação feita no cliente (salvar, atualizar, deletar) deve ser replicada para os seus veículos.
-    //orphanRemoval = true: Garante que se um veículo for removido da lista desse cliente, ele também será apagado fisicamente do banco de dados.
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude // evitar loop infinito
     @JsonManagedReference
-    @EqualsAndHashCode.Exclude
     private List<Veiculo> veiculos;
 
     @Column(nullable = false)

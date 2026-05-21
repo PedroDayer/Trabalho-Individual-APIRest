@@ -2,6 +2,7 @@ package org.serratec.trabalho.service;
 
 import org.serratec.trabalho.entity.Cliente;
 import org.serratec.trabalho.entity.Veiculo;
+import org.serratec.trabalho.exception.CampoInvalidoException;
 import org.serratec.trabalho.exception.DadosDuplicadosException;
 import org.serratec.trabalho.exception.RegraNegocioException;
 import org.serratec.trabalho.exception.SolicitacaoNaoEncontradaException;
@@ -50,8 +51,17 @@ public class VeiculoService {
         Veiculo veiculoExistente = buscarPorId(id);
 
         if(veiculo.getVendido() != null && veiculo.getVendido() && veiculo.getValorVenda() == null){
-         throw new RegraNegocioException("O valor da venda precisa ser informado!");
-      }
+         throw new CampoInvalidoException("O valor da venda precisa ser informado!");
+        }
+        if(veiculo.getValorVenda() != null && veiculo.getVendido() == null){
+            throw new CampoInvalidoException("O campo vendido precisa ser true para que possa especificar um valor de venda.");
+        }
+        if (Boolean.FALSE.equals(veiculo.getVendido())){
+            if (veiculo.getValorVenda() != null){
+                throw new CampoInvalidoException("sendo o campo vendido como false, não é possível que haja um valor de venda!");
+            }
+        }
+
         veiculoExistente.atualizarDados(veiculo);
         this.veiculoRepository.save(veiculoExistente);
     }

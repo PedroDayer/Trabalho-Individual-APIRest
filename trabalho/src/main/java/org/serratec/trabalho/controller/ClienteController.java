@@ -46,6 +46,7 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    //ver a funcionalidade desse metodo para a aplicacao(acho que ele nao esta sendo usado)
     @GetMapping("/{id}")
     public ResponseEntity<ClienteBuscar> buscarPorId(@PathVariable UUID id) {
         Cliente cliente = clienteService.buscarPorId(id);

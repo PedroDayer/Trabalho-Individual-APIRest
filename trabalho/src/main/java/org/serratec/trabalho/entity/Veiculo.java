@@ -14,9 +14,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 
-//@Data
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -34,7 +32,6 @@ public class Veiculo {
     @JoinColumn(nullable = false)
     @JsonBackReference
     @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private Cliente cliente;
 
     @Column(nullable = false)
@@ -111,9 +108,6 @@ public class Veiculo {
         this.maximoDesconto =  veiculoCadastrar.getMaximoDesconto();
         this.cliente = cliente;
 
-        //começa como falso, pq...
-//        @Column(nullable = false)
-//        private Boolean vendido;
         this.vendido = false;
     }
 

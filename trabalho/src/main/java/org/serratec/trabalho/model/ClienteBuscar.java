@@ -45,11 +45,5 @@ public class ClienteBuscar {
         this.email = cliente.getEmail();
         this.telefone = formatTelefone(cliente.getTelefone());
 
-//        if (cliente.getVeiculos() != null) {
-//            this.veiculos = cliente.getVeiculos().stream()
-//                    .map(VeiculoBuscar::new)
-//                    .collect(Collectors.toList());
-//        }
-
     }
 }

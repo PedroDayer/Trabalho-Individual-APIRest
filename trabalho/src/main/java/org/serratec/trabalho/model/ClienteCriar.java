@@ -17,11 +17,11 @@ public class ClienteCriar {
     private String nome;
 
     @NotBlank
-    @Pattern(regexp = "\\d{11}", message = "deve ter exatamento 11 números.")
+    @Pattern(regexp = "\\d{11}", message = "deve ter exatamente 11 números.")
     private String telefone;
 
     @NotBlank
-    @Pattern(regexp = "\\d{11}", message = "precisa ter exatamente 11 caracteres!")
+    @Pattern(regexp = "\\d{11}", message = "precisa ter exatamente 11 caracteres numéricos!")
     private String cpf;
 
     @NotBlank

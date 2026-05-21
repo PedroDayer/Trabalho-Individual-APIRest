@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
+    //protected mesmo?
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         String mensagem = ex
                 .getBindingResult() // pega os campos que cairam na validação == os que deram erro
@@ -61,13 +62,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensagemErro("Valor informado inválido.", LocalDateTime.now()));
     }
-
-//    @Override
-//    @ExceptionHandler(HttpMessageNotReadableException.class)
-//    public ResponseEntity<MensagemErro> handleErroDesserializacao(HttpMessageNotReadableException ex) {
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensagemErro("Falha na leitura da requisição. Verifique se os campos enviados (como IDs ou formatos) estão corretos.", LocalDateTime.now()));
-//    }
-
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<MensagemErro> handleErroServidor(Exception ex) {
