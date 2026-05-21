@@ -68,9 +68,6 @@ public class Veiculo {
         if (veiculoAtualizar.getValor() != null){
             this.valor = veiculoAtualizar.getValor();
         }
-        if(veiculoAtualizar.getPlaca() != null){
-            this.placa = veiculoAtualizar.getPlaca();
-        }
         if (veiculoAtualizar.getMaximoDesconto() != null){
             this.maximoDesconto = veiculoAtualizar.getMaximoDesconto();
         }

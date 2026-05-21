@@ -23,8 +23,6 @@ public class VeiculoAtualizar {
     @Min(1)
     private Float valor;
 
-    private String placa;
-
     @Min(0)
     private Float maximoDesconto;
 
