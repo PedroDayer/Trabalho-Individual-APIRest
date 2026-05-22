@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class VeiculoAtualizar {
 
-
+    @Size(min = 1, message = "não é permitido vazio")
     private String marca;
 
+    @Size(min = 1, message = "não é permitido vazio")
     private String modelo;
 
     @Min(1900)
