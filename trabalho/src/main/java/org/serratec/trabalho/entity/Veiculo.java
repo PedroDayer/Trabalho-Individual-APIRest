@@ -75,17 +75,14 @@ public class Veiculo {
         if (veiculoAtualizar.getVendido() != null) {
             this.vendido = veiculoAtualizar.getVendido();
 
-            // Se vendido = true
             if (this.vendido) {
                 if (veiculoAtualizar.getValorVenda() != null) {
                     this.valorVenda = veiculoAtualizar.getValorVenda();
                 }
             } else {
-                // Se mudou para false, limpa o valor da venda
                 this.valorVenda = null;
             }
         }
-        //metodo para corrigir o valorVenda apenas
         else if (veiculoAtualizar.getValorVenda() != null) {
             this.valorVenda = veiculoAtualizar.getValorVenda();
         }

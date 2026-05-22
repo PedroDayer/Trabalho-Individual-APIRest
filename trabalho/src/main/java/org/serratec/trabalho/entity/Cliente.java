@@ -22,7 +22,7 @@ public class Cliente {
     private UUID id;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude // evitar loop infinito
+    @ToString.Exclude
     @JsonManagedReference
     private List<Veiculo> veiculos;
 
