@@ -51,7 +51,7 @@ public class VeiculoService {
          throw new CampoInvalidoException("O valor da venda precisa ser informado!");
         }
         if(veiculo.getValorVenda() != null && veiculo.getVendido() == null){
-            throw new CampoInvalidoException("O campo vendido precisa ser true para que possa especificar um valor de venda.");
+            throw new CampoInvalidoException("O campo vendido precisa ser true ou dito novamente para que possa especificar um valor de venda.");
         }
         if (Boolean.FALSE.equals(veiculo.getVendido())){
             if (veiculo.getValorVenda() != null){
